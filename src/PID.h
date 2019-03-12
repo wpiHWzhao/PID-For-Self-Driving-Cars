@@ -25,26 +25,14 @@ class PID {
    * Update the PID error variables given cross track error.
    * @param cte The current cross track error
    */
-  double UpdateError(double cte);
-
-
-  /**
-   * Calculate the total PID error.
-   * @output The total PID error
-   */
-  double TotalError();
-
-  double iError=0;
-  double dErrorInit=0;
-  double totalError=0;
+  double controlLaw(double cte);
 
  private:
   /**
    * PID Errors
    */
-  double _p_error;
-  double _i_error;
-  double _d_error;
+  double iError=0;
+  double dErrorInit=0;
 
   /**
    * PID Coefficients
@@ -53,7 +41,7 @@ class PID {
   double _Ki;
   double _Kd;
 
-  int count=0;
+  // Initialization flag
   bool initialized = false;
 };
 

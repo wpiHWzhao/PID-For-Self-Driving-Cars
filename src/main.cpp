@@ -11,8 +11,8 @@ using std::string;
 
 // For converting back and forth between radians and degrees.
 constexpr double pi() { return M_PI; }
-double deg2rad(double x) { return x * pi() / 180; }
-double rad2deg(double x) { return x * 180 / pi(); }
+inline double deg2rad(double x) { return x * pi() / 180; }
+inline double rad2deg(double x) { return x * 180 / pi(); }
 
 // Checks if the SocketIO event has JSON data.
 // If there is data the JSON object in string format will be returned,
@@ -34,9 +34,6 @@ int main() {
   uWS::Hub h;
 
   PID pid;
-  /**
-   * TODO: Initialize the pid variable.
-   */
 
   h.onMessage([&pid](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, 
                      uWS::OpCode opCode) {
@@ -58,16 +55,15 @@ int main() {
           double angle = std::stod(j[1]["steering_angle"].get<string>());
           pid.InitPara(0.15,0.003,3.0,cte); // (Kp,Ki,Kd)
           double steer_value=0;
-          steer_value= -pid.UpdateError(cte);
+          steer_value= -pid.controlLaw(cte);
           /**
-           * TODO: Calculate steering value here, remember the steering value is
+           * Calculate steering value here, remember the steering value is
            *   [-1, 1].
-           * NOTE: Feel free to play around with the throttle and speed.
-           *   Maybe use another PID controller to control the speed!
            */
+
            if(steer_value<-1) steer_value=-1;
            if(steer_value>1) steer_value=1;
-          
+
           // DEBUG
           std::cout << "CTE: " << cte << " Steering Value: " << steer_value 
                     << std::endl;
