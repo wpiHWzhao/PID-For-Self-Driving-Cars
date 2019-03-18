@@ -54,9 +54,9 @@ int main() {
           double cte = std::stod(j[1]["cte"].get<string>());
           double speed = std::stod(j[1]["speed"].get<string>());
           double angle = std::stod(j[1]["steering_angle"].get<string>());
-          double dThrottle = 0.75;
-          pid.InitPara(0.134611,0.000270736,3.05349,cte); // (Kp,Ki,Kd)
-          pid_t.InitPara(0.316731,0.0,0.0226185,cte);
+          double dThrottle = 0.5;
+          pid.InitPara(0.13,0.0,2.6,cte); // (Kp,Ki,Kd)
+          pid_t.InitPara(0.3,0.0,0.02,cte); // PID for throttle
           double steer_value=0;
 
           steer_value= -pid.controlLaw(cte);
@@ -69,6 +69,7 @@ int main() {
 
            if(steer_value<-1) steer_value=-1;
            if(steer_value>1) steer_value=1;
+           if(throttle<0) throttle = -0.1;
 
           // DEBUG
           std::cout << "CTE: " << cte << " Steering Value: " << steer_value 
