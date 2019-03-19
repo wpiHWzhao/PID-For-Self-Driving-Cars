@@ -16,6 +16,14 @@ I follow the tuning procedure on Wiki:
 * Increase Kd until the oscillation goes away.
 * Slightly increase the Ki to bring the system to desired trajectory(with cte around 0). This would introduce some overshot but give the system a quicker response.
 
+I tuned the controller manually. Initially I first use [0.1,0,0] (Kp,Ki,Kd) and slightly increase Kp to 0.13 to have a steady oscilation, then I increased the Kd term to 2.6 to stop the oscilation. I tried to increase Ki to have a quicker response but it introduce more oscilation. Therefore I set it to 0.
+
+### Effect of P, I, D 
+
+* The proportional gain Kp would steer the car towards the center line. But this would always overshoot.
+* The integral portion would eliminate a possible bias on the controlled system. Normally it would lead to a quicker response but alse introduce a little bit oscillations. 
+* The differential portion helps to smooth the oscillation introduced by the Kp. But if it is too large the car would start to chatter. 
+
 ## Dependencies
 
 * cmake >= 3.5
